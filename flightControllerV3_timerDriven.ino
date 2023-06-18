@@ -295,20 +295,20 @@ class PID_Controller {
     const double PITCH_PID_MAX = 10000.0;
     const double YAW_PID_MAX = 10000.0;
 
-    const float KP_ROLL = 30.0;
+    const float KP_ROLL = 10.0;
     const float KI_ROLL = 0.0;
-    const float KD_ROLL = 3.3;
+    const float KD_ROLL = 0.0;
     
-    const float KP_PITCH = 30.0;
+    const float KP_PITCH = 10.0;
     const float KI_PITCH = 0.0;
-    const float KD_PITCH = 3.3;
+    const float KD_PITCH = 0.0;
     
-    const float KP_YAW = 30.0;
+    const float KP_YAW = 10.0;
     const float KI_YAW = 0.0;
-    const float KD_YAW = 3.3;
+    const float KD_YAW = 0.5;
 
-    const float I_MAX_ERR_THRESH = 50.0; //when err is above I_MAX_ERR_THRESH deg/s then I will do nothing and maintain its curr val
-    const float I_MIN_ERR_THRESH = 1.0;
+    const float I_MAX_ERR_THRESH = 1000.0; //when err is above I_MAX_ERR_THRESH deg/s then I will do nothing and maintain its curr val
+    const float I_MIN_ERR_THRESH = 0.0;
     double setpoint_roll = 0; //deg/s
     double setpoint_pitch = 0; //deg/s
     double setpoint_yaw = 0; //deg/s
@@ -328,12 +328,12 @@ class PID_Controller {
     //Receiver *recvr;
 
     double accumulate(double err, double *I, double deltaS, float K, double *prevErr) {
-      if (sign(err) != sign(*prevErr)) {
-        *I = 0;
-      }else if(abs(err) < I_MAX_ERR_THRESH && abs(err) > I_MIN_ERR_THRESH) {
+     // if (sign(err) != sign(*prevErr)) {
+        //*I = 0;
+     // }else if(abs(err) < I_MAX_ERR_THRESH && abs(err) > I_MIN_ERR_THRESH) {
         *I = *I + deltaS*err*K;
-      }
-      *prevErr = err;
+     // }
+      //*prevErr = err;
       return *I;
     }
 
@@ -376,7 +376,7 @@ class PID_Controller {
       boolean rollPositive = sign(roll) == -1 ? 0 :  1;
       
       uint16_t pitchDelta = abs((pitch/PITCH_PID_MAX) * 65535);
-      boolean pitchPositive = sign(pitch) == -1 ? 0 :  1;
+      boolean pitchPositive = sign(pitch) == -1 ? 1 :  0;
 
       uint16_t yawDelta = abs((yaw/YAW_PID_MAX) * 65535);
       boolean yawPositive = sign(yaw) == -1 ? 0 :  1;
@@ -488,8 +488,8 @@ IntervalTimer heartBeat;
 
 boolean IS_ARMED = false;
 boolean IS_FAILSAFED = true;
-#define M0_PIN 14
-#define M1_PIN 15
+#define M0_PIN 15
+#define M1_PIN 14
 #define M2_PIN 22
 #define M3_PIN 23
 IMU6050 *imu; 
@@ -510,7 +510,7 @@ void setup() {
   MOTOR3.attach(M3_PIN);
   writeToMotors(0,0,0,0);
   //Serial.begin(115200);
-  imu = new IMU6050(25);
+  imu = new IMU6050(10);
   pid = new PID_Controller(imu);
   delay(5000);
   //heartBeat.begin(updateAll, 1000);
@@ -521,11 +521,10 @@ int callTimeMillis = millis();
 void loop() {
   //callTimeMillis = millis();
   //if (millis() > callTimeMillis) {
-    
     updateAll();
-    
-    //Serial.println(micros() - start);
-  //}
+    //delay(1);
+    //callTimeMillis = millis();
+ // }
   };
 
 int printTime = millis();
@@ -553,7 +552,7 @@ void updateAll() {
     writeToMotors(0,0,0,0);
   }
 
-//  if (millis() - printTime > 20) {
+  if (millis() - printTime > 20) {
 //      Serial.print("a:");
 //      Serial.print(m0);
 //      Serial.print("\tb:");
@@ -578,7 +577,7 @@ void updateAll() {
 ////      Serial.print(setpoint_thr);
 ////      Serial.print("\n");
 //      printTime = millis();
-//  }
+  }
 
 //  if (IS_ARMED) {
 //    writeToMotors(m0, m1, m2, m3);
