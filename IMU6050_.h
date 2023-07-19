@@ -2,6 +2,9 @@
 #include "frequencyFilter.h"
 #include "MPU6050.h"
 #include <Wire.h>
+
+#ifndef IMU6050__H
+#define IMU6050__H
 class IMU6050_ {
 //My MPU6050 tests:
 //1khz refresh rate; 360 us read time; 
@@ -50,11 +53,12 @@ class IMU6050_ {
     windowFilter *veloFilter;
     windowFilter *accelFilter;
     //windowFilter *accelFilterAux;
-    frequencyFilter *accelFreqFilter;
+    //frequencyFilter *accelFreqFilter;
 
   public:
     IMU6050_(uint8_t veloFilterSize, uint8_t accelFilterSize);   
     void updateRotationData();//updates 3 axis rotational data of angular velovity(deg/s) and angular acceleration(deg/s2)
+    void updateRotationDataV2();
     void resetData();
     float getRollV();
     float getPitchV();
@@ -75,3 +79,4 @@ class IMU6050_ {
 
    
 };
+#endif

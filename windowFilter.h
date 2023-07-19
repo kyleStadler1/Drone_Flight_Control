@@ -1,3 +1,5 @@
+#ifndef windowFilter_H
+#define windowFilter_H
 class windowFilter {
  
   private:
@@ -42,3 +44,4 @@ class windowFilter {
   }
   
 };
+#endif

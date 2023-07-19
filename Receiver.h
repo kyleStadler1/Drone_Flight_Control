@@ -38,6 +38,10 @@
 //};
 
 #include "sbus.h"
+#include <SoftwareSerial.h> 
+#include <stdint.h>
+#ifndef Receiver_H
+#define Receiver_H
 class Receiver {
   private:
     bfs:: SbusRx *sbus;
@@ -53,6 +57,7 @@ class Receiver {
     #define ARM 4 //aux switch
     #define TURTLE 5
     #define BEEPER 7
+    #define port &Serial8
     double roll_rate = 0;
     double pitch_rate = 0;
     double yaw_rate = 0;
@@ -64,7 +69,7 @@ class Receiver {
     const double CUBIC_AMP =  0.00000117956886463;
     const double LINEAR_AMP = 0.791208791209;
     
-    double rates(uint16_t rawCh);
+    float rates(uint16_t rawCh);
 //    {
 //      double midPtOffset = ((double)rawCh - (double)CH_MID);
 //      return ((CUBIC_AMP*pow(midPtOffset, 3) + LINEAR_AMP*(midPtOffset))/2.0);
@@ -100,7 +105,7 @@ class Receiver {
 //      data_ = &sbus->data();
 //      sbus->Begin();
 //    }
-    void getSetpoints(double *r, double *p, double *y, uint16_t *thr);
+    void getSetpoints(float *r, float *p, float *y, unsigned int *thr);
 //    {
 //      update_rates();
 //      *r = roll_rate;
@@ -119,3 +124,4 @@ class Receiver {
     boolean test();
 
 };
+#endif

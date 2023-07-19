@@ -1,3 +1,5 @@
+#ifndef frequencyFilter_H
+#define frequencyFilter_H
 class frequencyFilter {
  
   private:
@@ -62,3 +64,5 @@ class frequencyFilter {
   }
   
 };
+
+#endif
