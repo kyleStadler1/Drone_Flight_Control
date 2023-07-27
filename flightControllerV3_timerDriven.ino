@@ -47,7 +47,7 @@ void loop() {
 
 void updateAll() {
     imu->updateRotationDataV2();
-    //Serial.print(imu->angularVelocityToString());
+    Serial.print(imu->angularVelocityToString());
     unsigned int m0, m1, m2, m3;
     pid->getMotorValues(&m0, &m1, &m2, &m3, false);
     writeToMotors(m0, m1, m2, m3, false);

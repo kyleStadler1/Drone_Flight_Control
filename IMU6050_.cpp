@@ -86,9 +86,9 @@ void IMU6050_::updateRotationData() {
 void IMU6050_::updateRotationDataV2() {
   int16_t x, y, z;
   imu.getRotation(&y, &x, &z);
-  rollVelo = (-1.0) * (0.3*rollVelo + 0.7 * (float)x / (float)DPS_LSB);
-  pitchVelo = 0.3*pitchVelo + 0.7 * (float)y / (float)DPS_LSB;
-  yawVelo = (-1.0) * (0.3*yawVelo + 0.7 * (float)z / (float)DPS_LSB);
+  rollVelo = (-1.0) * (0.2*rollVelo + 0.8 * (float)x / (float)DPS_LSB);
+  pitchVelo = 0.2*pitchVelo + 0.8 * (float)y / (float)DPS_LSB;
+  yawVelo = (-1.0) * (0.2*yawVelo + 0.8 * (float)z / (float)DPS_LSB);
 
   //veloFilter->filter(rollVelo, pitchVelo, yawVelo, &rollVelo, &pitchVelo, &yawVelo);
   //Serial.println(*DPS_LSB);
