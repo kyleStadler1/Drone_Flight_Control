@@ -89,41 +89,6 @@ void IMU6050_::updateRotationDataV2() {
   rollVelo = (-1.0) * (0.2*rollVelo + 0.8 * (float)x / (float)DPS_LSB);
   pitchVelo = 0.2*pitchVelo + 0.8 * (float)y / (float)DPS_LSB;
   yawVelo = (-1.0) * (0.2*yawVelo + 0.8 * (float)z / (float)DPS_LSB);
-
-  //veloFilter->filter(rollVelo, pitchVelo, yawVelo, &rollVelo, &pitchVelo, &yawVelo);
-  //Serial.println(*DPS_LSB);
-//  float deltaS = (micros() - dataDate)/1000000.0;
-//  float rollVeloRawNew = (float)x / (float)DPS_LSB; //+ 0.368903;
-//  float pitchVeloRawNew = (float)y / (float)DPS_LSB; //- 0.398171;
-//  float yawVeloRawNew = (float)z / (float)DPS_LSB; //+ 0.725000;
-//
-//  float rollVeloFilt;
-//  float pitchVeloFilt;
-//  float yawVeloFilt;
-//  veloFilter->filter(rollVeloRawNew, pitchVeloRawNew, yawVeloRawNew, &rollVeloFilt, &pitchVeloFilt, &yawVeloFilt);
-//
-//  rollAccelRaw = (rollVeloFilt - rollVelo)/deltaS;
-//  pitchAccelRaw = (pitchVeloFilt - pitchVelo)/deltaS;
-//  yawAccelRaw = (yawVeloFilt - yawVelo)/deltaS;
-//  
-//  rollVelo = rollVeloFilt;
-//  pitchVelo = pitchVeloFilt;
-//  yawVelo = yawVeloFilt;
-//  rollVeloRaw = rollVeloRawNew;
-//  pitchVeloRaw = pitchVeloRawNew;
-//  yawVeloRaw = yawVeloRawNew;
-//
-//  
-//  accelFilter->filter(rollAccelRaw, pitchAccelRaw, yawAccelRaw, &rollAccel, &pitchAccel, &yawAccel);
-  //accelFilterAux->filter(rollAccelRaw, pitchAccelRaw, yawAccelRaw, &rollAccel, &pitchAccel, &yawAccel);
-  //accelFreqFilter->filter(rollAccel, pitchAccel, yawAccel, &rollAccel, &pitchAccel, &yawAccel);
-//  rollAccel = abs(rollAccel) > 100 ? rollAccel : 0;
-//  pitchAccel = abs(pitchAccel) > 100 ? pitchAccel : 0;
-//  yawAccel = abs(yawAccel) > 100 ? yawAccel : 0;
-//  
-  
-
-  //dataDate = micros();
 }
 
 void IMU6050_::resetData() {
